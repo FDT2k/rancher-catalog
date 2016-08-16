@@ -1,0 +1,6 @@
+sys-kibana:
+  scale: 1
+sys-elasticsearch:
+  scale: 1
+sys-logstash:
+  scale: 1

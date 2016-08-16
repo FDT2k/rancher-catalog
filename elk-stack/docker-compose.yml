@@ -1,0 +1,31 @@
+sys-kibana:
+  ports:
+  - 5601:5601/tcp
+  labels:
+    io.rancher.container.pull_image: always
+    io.rancher.scheduler.affinity:host_label: usage=system
+  image: kibana
+  links:
+  - sys-elasticsearch:elasticsearch
+sys-elasticsearch:
+  ports:
+  - 9200:9200/tcp
+  labels:
+    io.rancher.container.pull_image: always
+    io.rancher.scheduler.affinity:host_label: usage=system
+  image: elasticsearch
+  volumes:
+  - /srv/data/elasticsearch:/usr/share/elasticsearch/data
+  stdin_open: true
+sys-logstash:
+  ports:
+  - 5000:5000/tcp
+  - 5000:5000/udp
+  environment:
+    LOGSPOUT: ignore
+  labels:
+    io.rancher.container.pull_image: always
+    io.rancher.scheduler.affinity:host_label: usage=system
+  image: tchak2k/docker-logstash
+  links:
+  - sys-elasticsearch:elasticsearch
