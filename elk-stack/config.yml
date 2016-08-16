@@ -1,7 +1,7 @@
 name: Elk Stack
 description: |
   Elk stack to use with standard docker --log-driver
-version: 1.0
+version:
 category: log
 maintainer: Fabien Di Tore
 license: GPL 2
