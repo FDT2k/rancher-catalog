@@ -1,0 +1,26 @@
+letsencrypt:
+  labels:
+    io.rancher.scheduler.global: 'true'
+    io.rancher.container.pull_image: always
+    io.rancher.scheduler.affinity:host_label: usage=web
+  image: jrcs/letsencrypt-nginx-proxy-companion
+  volumes:
+  - /srv/nginx/certs:/etc/nginx/certs:rw
+  - /var/run/docker.sock:/var/run/docker.sock:ro
+  volumes_from:
+  - nginx-proxy
+nginx-proxy:
+  ports:
+  - 80:80/tcp
+  - 443:443/tcp
+  labels:
+    io.rancher.scheduler.global: 'true'
+    io.rancher.sidekicks: letsencrypt
+    io.rancher.container.pull_image: always
+    io.rancher.scheduler.affinity:host_label: usage=web
+  image: jwilder/nginx-proxy
+  volumes:
+  - /var/run/docker.sock:/tmp/docker.sock:ro
+  - /srv/nginx/certs:/etc/nginx/certs:ro
+  - /etc/nginx/vhost.d
+  - /usr/share/nginx/html

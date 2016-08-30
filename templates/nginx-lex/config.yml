@@ -1,0 +1,8 @@
+name: Nginx-gen+letsencrypt
+description: |
+  Elk stack to use with standard docker --log-driver
+version: 0
+category: log
+maintainer: Fabien Di Tore
+license: GPL 2
+projectURL:
